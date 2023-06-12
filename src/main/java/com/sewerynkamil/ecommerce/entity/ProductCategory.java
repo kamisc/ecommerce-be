@@ -6,13 +6,15 @@ import lombok.Setter;
 
 import java.util.Set;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "product_category")
 @Getter
 @Setter
 public class ProductCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Long id;
 
