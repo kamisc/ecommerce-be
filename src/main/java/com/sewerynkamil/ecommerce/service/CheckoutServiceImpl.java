@@ -11,11 +11,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.UUID;
+
+import static java.util.UUID.randomUUID;
 
 @Service
 @AllArgsConstructor
 public class CheckoutServiceImpl implements CheckoutService {
+
     private final CustomerRepository customerRepository;
 
     @Override
@@ -33,6 +35,14 @@ public class CheckoutServiceImpl implements CheckoutService {
         order.setShippingAddress(purchase.getShippingAddress());
 
         Customer customer = purchase.getCustomer();
+
+        String email = customer.getEmail();
+        Customer customerFromDb = customerRepository.findByEmail(email);
+
+        if (customerFromDb != null) {
+            customer = customerFromDb;
+        }
+
         customer.add(order);
 
         customerRepository.save(customer);
@@ -41,6 +51,6 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     private String generateOrderTrackingNumber() {
-        return UUID.randomUUID().toString();
+        return randomUUID().toString();
     }
 }
