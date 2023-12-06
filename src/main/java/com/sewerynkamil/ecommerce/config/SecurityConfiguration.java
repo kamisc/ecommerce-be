@@ -22,6 +22,7 @@ class SecurityConfiguration {
                         .jwt();
 
         http.cors();
+        http.csrf().disable();
 
         http.setSharedObject(ContentNegotiationStrategy.class, new HeaderContentNegotiationStrategy());
 
